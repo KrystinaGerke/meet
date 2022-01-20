@@ -32,6 +32,23 @@ const oAuth2Client = new google.auth.OAuth2(
   redirect_uris[0]
 );
 
+
+module.exports.getAuthURL = async () => {
+  const authUrl = oAuth2Client.generateAuthUrl({
+    access_type: "offline",
+    scope: SCOPES,
+  });
+
+  return {
+    statusCode: 200,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      authUrl: authUrl,
+    }),
+  };
+};
 /**
  *
  * The first step in the OAuth process is to generate a URL so users can log in with
