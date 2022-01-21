@@ -2,16 +2,8 @@ const { google } = require("googleapis");
 const OAuth2 = google.auth.OAuth2;
 const calendar = google.calendar("v3");
 
-/**
- * SCOPES allows you to set access levels; this is set to readonly for now because you don't have access rights to
- * update the calendar yourself. For more info, check out the SCOPES documentation at this link: https://developers.google.com/identity/protocols/oauth2/scopes
- */
 const SCOPES = ["https://www.googleapis.com/auth/calendar.readonly"];
 
-/**
- * Credentials are those values required to get access to your calendar. If you see “process.env” this means
- * the value is in the “config.json” file. This is a best practice as it keeps your API secrets hidden. Please remember to add “config.json” to your “.gitignore” file.
- */
 const credentials = {
   client_id: process.env.CLIENT_ID,
   project_id: process.env.PROJECT_ID,
@@ -20,7 +12,7 @@ const credentials = {
   auth_uri: "https://accounts.google.com/o/oauth2/auth",
   token_uri: "https://oauth2.googleapis.com/token",
   auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-  redirect_uris: ["https://KrystinaGerke.github.io/meet/", "http://localhost:3000/test-auth-server.html"],
+  redirect_uris: ["https://KrystinaGerke.github.io/meet", "http://localhost:3000/test-auth-server.html"],
   javascript_origins: ["https://KrystinaGerke.github.io/", "http://localhost:3000"],
 };
 
@@ -49,30 +41,17 @@ module.exports.getAuthURL = async () => {
     }),
   };
 };
-/**
- *
- * The first step in the OAuth process is to generate a URL so users can log in with
- * Google and be authorized to see your calendar. After logging in, they’ll receive a code
- * as a URL parameter.
- *
- */
 
  module.exports.getAccessToken = async (event) => {
-  // The values used to instantiate the OAuthClient are at the top of the file
     const oAuth2Client = new google.auth.OAuth2(
       client_id,
       client_secret,
       redirect_uris[0]
     );
-    // Decode authorization code extracted from the URL query
     const code = decodeURIComponent(`${event.pathParameters.code}`);
   
     return new Promise((resolve, reject) => {
-      /**
-       *  Exchange authorization code for access token with a “callback” after the exchange,
-       *  The callback in this case is an arrow function with the results as parameters: “err” and “token.”
-       */
-  
+      
       oAuth2Client.getToken(code, (err, token) => {
         if (err) {
           return reject(err);
@@ -81,7 +60,7 @@ module.exports.getAuthURL = async () => {
       });
     })
       .then((token) => {
-        // Respond with OAuth token 
+
         return {
           statusCode: 200,
           headers: {
@@ -91,7 +70,7 @@ module.exports.getAuthURL = async () => {
         };
       })
       .catch((err) => {
-        // Handle error
+
         console.error(err);
         return {
           statusCode: 500,
@@ -108,7 +87,7 @@ module.exports.getAuthURL = async () => {
       client_secret,
       redirect_uris[0]
     );
-    // the param 'access_token' is taken from the response body of getAccessToken
+    
     const access_token = decodeURIComponent(
       `${event.pathParameters.access_token}`
     );
