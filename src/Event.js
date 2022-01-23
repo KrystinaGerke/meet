@@ -13,7 +13,7 @@ export class Event extends Component {
     };
 
     render(){
-        const { event } = this.props;
+        const { event} = this.props;
         const { collapsed } = this.state;
        
         
@@ -29,7 +29,8 @@ export class Event extends Component {
         }
         else{
             <div className="details-view">
-            <link className='htmlLink'>{event.htmlLink}</link>
+                <h2 className="details-header">About event:</h2>
+            <a href={event.htmlLink} className='htmlLink' target='_blank'>See details on Google Calendar</a>
             <p className='description'>{event.description}</p>
             <button className='hide-details'
         onClick={this.handleClick}>hide Details</button></div>
@@ -38,3 +39,5 @@ export class Event extends Component {
     }
     
 }
+
+export default Event;
