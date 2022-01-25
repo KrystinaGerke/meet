@@ -17,13 +17,17 @@ export class Event extends Component {
         const { collapsed } = this.state;
        
         
-    return <div className='event'>
+    return (
+        <div className='event'>
         
         <h1 className='summary'>{event.summary}</h1>
-        <p className='dateTime'>{event.dateTime}</p>
-        <p className='timeZone'>{event.timeZone}</p>
-        <p className='location'>{event.summary} | {event.location}</p>
-
+        <p className="start-date">
+            {event.start.dateTime} ({event.start.timeZone})
+          </p>
+        <p className='location'>@{event.summary} | {event.location}</p>
+   
+            
+    
             {!collapsed && (
                 <div className="details-view">
                 <h2 className="details-header">About event:</h2>
@@ -35,8 +39,7 @@ export class Event extends Component {
         onClick={this.handleClick}>{collapsed ? "Show Details" : "Hide-Details"}</button>
         
     </div> 
+    ) 
+    }
     
 }
-}
-
-export default Event;

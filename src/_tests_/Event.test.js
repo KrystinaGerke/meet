@@ -42,8 +42,4 @@ describe('<EventList /> component', () => {
         expect(EventWrapper.state('collapsed')).toBe(true);
     });
 
-
-
-
-
 });
