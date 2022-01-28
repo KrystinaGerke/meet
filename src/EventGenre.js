@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { PieChart, Pie, ResponsiveContainer } from 'recharts';
 
-const EventGenre = ({ events }) => {
+export const EventGenre = ({ events }) => {
 
   const [data, setData] = useState([]);
 
@@ -34,4 +34,3 @@ const EventGenre = ({ events }) => {
     </ResponsiveContainer>
   );
 }
-
