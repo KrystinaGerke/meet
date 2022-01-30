@@ -12,7 +12,7 @@ export const extractLocations = (events) => {
 
 
 
-const checkToken = async (accessToken) => {
+export const checkToken = async (accessToken) => {
     const result = await fetch(`https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=${accessToken}`)
     .then((res) => res.json())
     .catch((error) => error.json());
@@ -25,7 +25,7 @@ const checkToken = async (accessToken) => {
 const getToken = async (code) => {
     const encodeCode = encodeURIComponent(code);
     const { access_token } = await fetch(
-        'https://d4zjevjv39.execute-api.eu-central-1.amazonaws.com/dev/api/token' + '/' + encodeCode
+        'https://9cn11x13jc.execute-api.eu-central-1.amazonaws.com/dev/api/token/' + encodeCode
     )
     .then((res) => {
         return res.json();
@@ -59,7 +59,6 @@ export const getEvents = async () => {
         NProgress.done();
         return mockData;
     }
-
     if (!navigator.onLine) {
         const data = localStorage.getItem("lastEvents");
         NProgress.done();
@@ -69,7 +68,7 @@ export const getEvents = async () => {
     const token = await getAccessToken();
     if(token) {
         removeQuery();
-        const url = 'https://d4zjevjv39.execute-api.eu-central-1.amazonaws.com/dev/api/get-events' + '/' + token;
+        const url = 'https://9cn11x13jc.execute-api.eu-central-1.amazonaws.com/dev/api/get-events/' + token;
         const result = await axios.get(url);
         if(result.data) {
             var locations = extractLocations(result.data.events);
@@ -92,7 +91,7 @@ export const getAccessToken = async () => {
         const searchParams = new URLSearchParams(window.location.search);
         const code = await searchParams.get('code');
         if(!code) {
-            const results = await axios.get('https://d4zjevjv39.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url');
+            const results = await axios.get('https://9cn11x13jc.execute-api.eu-central-1.amazonaws.com/dev/api/get-auth-url');
             const { authUrl } = results.data;
             return (window.location.href = authUrl);
         }
@@ -100,4 +99,3 @@ export const getAccessToken = async () => {
     }
 return accessToken;
 };
-
