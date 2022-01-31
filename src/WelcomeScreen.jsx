@@ -32,7 +32,7 @@ export function WelcomeScreen(props) {
         </div>
         <div className="privacy-link"><a
         
-          href="https://julieprograms.github.io/meetApp/privacy.html"
+          href="https://KrystinaGerke.github.io/meet/privacy.html"
           rel="nofollow noopener"
         >
           Privacy policy
